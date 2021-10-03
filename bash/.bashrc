@@ -1,6 +1,7 @@
 #
 # ~/.bashrc
 #
+
 PROMPT_COMMAND=__prompt_command
 __prompt_command() {
 	local EXIT="$?"

@@ -70,7 +70,7 @@ import Data.Monoid
 import System.Exit
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
-import XMonad.Hooks.ManageDocks ( avoidStruts, docks, manageDocks )
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicWorkspaces

@@ -1,9 +1,9 @@
 #!/bin/bash
-ln ~/.bashrc bash/.bashrc
-ln ~/.xmonad/xmonad.hs xmonad/xmonad.hs
-ln ~/.config/polybar/config polybar/config
-ln ~/.config/polybar/launch.sh polybar/launch.sh
-ln ~/.config/autostart.sh autostart/autostart.sh
-#git add --all
-#git commit -m "update configs"
-#git push
+ln -f ~/.bashrc bash/.bashrc
+ln -f ~/.xmonad/xmonad.hs xmonad/xmonad.hs
+ln -f ~/.config/polybar/config polybar/config
+ln -f ~/.config/polybar/launch.sh polybar/launch.sh
+ln -f ~/.config/autostart.sh autostart/autostart.sh
+git add --all
+git commit -m "update configs"
+git push
