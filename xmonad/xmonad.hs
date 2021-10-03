@@ -1,9 +1,76 @@
 import XMonad
+    ( button1,
+      button2,
+      button3,
+      controlMask,
+      mod1Mask,
+      mod4Mask,
+      shiftMask,
+      xK_1,
+      xK_9,
+      xK_Down,
+      xK_F4,
+      xK_Left,
+      xK_Return,
+      xK_Right,
+      xK_Tab,
+      xK_Up,
+      xK_comma,
+      xK_e,
+      xK_h,
+      xK_j,
+      xK_k,
+      xK_l,
+      xK_m,
+      xK_n,
+      xK_p,
+      xK_period,
+      xK_q,
+      xK_r,
+      xK_space,
+      xK_t,
+      xK_w,
+      xK_z,
+      defaultConfig,
+      io,
+      spawn,
+      whenJust,
+      (|||),
+      xmonad,
+      (-->),
+      (=?),
+      className,
+      composeAll,
+      doFloat,
+      doIgnore,
+      resource,
+      focus,
+      kill,
+      mouseMoveWindow,
+      mouseResizeWindow,
+      refresh,
+      screenWorkspace,
+      sendMessage,
+      setLayout,
+      windows,
+      withFocused,
+      (.|.),
+      Default(def),
+      XConfig(XConfig, terminal, focusFollowsMouse, clickJustFocuses,
+              borderWidth, modMask, workspaces, normalBorderColor,
+              focusedBorderColor, keys, mouseBindings, layoutHook, manageHook,
+              handleEventHook, logHook, startupHook),
+      ChangeLayout(NextLayout),
+      Full(Full),
+      IncMasterN(IncMasterN),
+      Mirror(Mirror),
+      Resize(Expand, Shrink),
+      Tall(Tall) )
 import Data.Monoid
 import System.Exit
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
-import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageDocks ( avoidStruts, docks, manageDocks )
 import XMonad.Hooks.ManageHelpers
 import XMonad.Actions.CycleWS
 import XMonad.Actions.DynamicWorkspaces
@@ -269,9 +336,7 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = wallpaperSetter defWallpaperConf {
-                             wallpaperBaseDir = "~/git/dotfiles/wallpapers"
-                            }
+myLogHook = return ()
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -283,6 +348,8 @@ myLogHook = wallpaperSetter defWallpaperConf {
 -- By default, do nothing.
 myStartupHook = do
 	spawn "/home/gazavat/.config/polybar/launch.sh"
+	spawn "feh --bg-fill --randomize ~/git/dotfiles/wallpapers/*"
+	spawn "/home/gazavat/.config/autostart.sh"
 
 ------------------------------------------------------------------------
 -- launcher
