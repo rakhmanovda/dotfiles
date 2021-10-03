@@ -37,6 +37,7 @@ alias ls='ls --color=auto'
 #PS1='[\u@\h \W]\$ '
 
 export HISTCONTROL=ignoredups
+export QT_QPA_PLATFORMTHEME=qt5ct
 
 ########
 #ALCI
