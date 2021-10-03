@@ -18,6 +18,7 @@ import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioLowerVolume, xF86XK_AudioRaiseV
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+--to test that it ln's
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
@@ -295,7 +296,7 @@ dmenuLauncher = "dmenu_run"
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main =	xmonad $ fullscreenSupport $ docks defaults
+main = xmonad $ fullscreenSupport $ docks defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
