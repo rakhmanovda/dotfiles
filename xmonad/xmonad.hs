@@ -15,6 +15,8 @@ import XMonad.Layout.NoBorders
 import XMonad.Hooks.WallpaperSetter
 import XMonad.Layout.ShowWName
 import XMonad.Actions.GridSelect
+import XMonad.Actions.CycleWindows
+import XMonad.Hooks.EwmhDesktops
 
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute,  xF86XK_AudioPlay, xF86XK_AudioPrev, xF86XK_AudioNext, xF86XK_AudioStop)
 
@@ -196,6 +198,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --change keyboard layout
     
     , ((controlMask  , xK_space), spawn "/home/gazavat/bin/change_layout.sh")
+
+    , ((mod1Mask , xK_Tab), spawn "rofi -show window -show-icons")
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
@@ -261,6 +265,17 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
+
+myTabConfig = def {
+	activeBorderColor = "#7C7C7C",
+	activeTextColor = "#CEFFAC",
+	activeColor = "#000000",
+	inactiveBorderColor = "#7C7C7C",
+	inactiveTextColor = "#EEEEEE",
+	inactiveColor = "#000000"
+}
+--tabbedLayout = tabbed shrinkText myTabConfig
+
 myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
@@ -354,7 +369,7 @@ myShowWNameTheme = def
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad $ fullscreenSupport $ docks defaults
+main = xmonad $ fullscreenSupport $ docks $ ewmh defaults
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
