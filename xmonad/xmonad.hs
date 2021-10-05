@@ -62,7 +62,7 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
-myFont = "xft:Hack Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
+myFont = "xft:Hack Nerd Font Mono:regular:size=12:antialias=true:hinting=true"
 -- GridSelect
 myColorizer :: Window -> Bool -> X (String, String)
 myColorizer = colorRangeFromClassName
@@ -341,6 +341,13 @@ myStartupHook = do
 myLauncher = "rofi -no-lazy-grab -show drun -modi run,drun,window"
 dmenuLauncher = "dmenu_run"
 
+myShowWNameTheme :: SWNConfig
+myShowWNameTheme = def
+    { swn_font              = "xft:Ubuntu:bold:size=60"
+    , swn_fade              = 1.0
+    , swn_bgcolor           = "#bb1c1f24"
+    , swn_color             = "#bbffffff"
+    }
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -371,7 +378,7 @@ defaults = def {
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
-        layoutHook         = smartBorders $ myLayout,
+        layoutHook         = showWName' myShowWNameTheme $ smartBorders $ myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
