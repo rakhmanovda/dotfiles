@@ -353,7 +353,7 @@ myStartupHook = do
 ------------------------------------------------------------------------
 -- launcher
 
-myLauncher = "rofi -no-lazy-grab -show drun -modi run,drun,window"
+myLauncher = "rofi -no-lazy-grab -show drun -modi run,drun,window,combi"
 dmenuLauncher = "dmenu_run"
 
 myShowWNameTheme :: SWNConfig
