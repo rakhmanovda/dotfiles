@@ -10,8 +10,11 @@ import XMonad.Actions.DynamicWorkspaces
 import System.IO
 import XMonad.Layout.Fullscreen
     ( fullscreenEventHook, fullscreenManageHook, fullscreenSupport, fullscreenFull )
+import XMonad.Layout.Tabbed
 import XMonad.Layout.NoBorders
 import XMonad.Hooks.WallpaperSetter
+import XMonad.Layout.ShowWName
+import XMonad.Actions.GridSelect
 
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute,  xF86XK_AudioPlay, xF86XK_AudioPrev, xF86XK_AudioNext, xF86XK_AudioStop)
 
@@ -58,6 +61,47 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 --
 myNormalBorderColor  = "#dddddd"
 myFocusedBorderColor = "#ff0000"
+
+myFont = "xft:Hack Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
+-- GridSelect
+myColorizer :: Window -> Bool -> X (String, String)
+myColorizer = colorRangeFromClassName
+                  (0x28,0x2c,0x34) -- lowest inactive bg
+                  (0x28,0x2c,0x34) -- highest inactive bg
+                  (0xc7,0x92,0xea) -- active bg
+                  (0xc0,0xa7,0x9a) -- inactive fg
+                  (0x28,0x2c,0x34) -- active fg
+
+-- gridSelect menu layout
+mygridConfig :: p -> GSConfig Window
+mygridConfig colorizer = (buildDefaultGSConfig myColorizer)
+    { gs_cellheight   = 40
+    , gs_cellwidth    = 200
+    , gs_cellpadding  = 6
+    , gs_originFractX = 0.5
+    , gs_originFractY = 0.5
+    , gs_font         = myFont
+    }
+
+spawnSelected' :: [(String, String)] -> X ()
+spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
+    where conf = def
+                   { gs_cellheight   = 40
+                   , gs_cellwidth    = 200
+                   , gs_cellpadding  = 6
+                   , gs_originFractX = 0.5
+                   , gs_originFractY = 0.5
+                   , gs_font         = myFont
+                   }
+
+myAppGrid = [ ("key-mapper", "key-mapper-gtk")
+            , ("Strawberry", "strawberry")
+            , ("Discord", "discord")
+            , ("Vivaldi", "vivaldi-stable")
+            , ("Telegram", "telegram-desktop")
+            , ("Steam", "steam")
+            ]
+
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -141,6 +185,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_Right), shiftNextScreen >> nextScreen)
     , ((modm .|. shiftMask, xK_Left),  shiftPrevScreen >> prevScreen)
     , ((modm,               xK_z),     toggleWS)
+
+
+    --grid select
+    -- KB_GROUP Grid Select (CTR-g followed by a key)
+    , ((modm .|. controlMask, xK_g), spawnSelected' myAppGrid)                 -- grid select favorite apps
+    , ((modm .|. controlMask, xK_f), goToSelected $ mygridConfig myColorizer)  -- goto selected window
+    , ((modm .|. controlMask, xK_h), bringSelected $ mygridConfig myColorizer) -- bring selected window
 
     --change keyboard layout
     
