@@ -146,4 +146,4 @@ configuration {
   }
 }
 
-@import "~/git/dotfiles/rofi/styles/sidetab.rasi"
+@import "~/git/dotfiles/rofi/styles/sidetab_custom.rasi"
