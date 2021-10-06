@@ -199,7 +199,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     
     , ((controlMask  , xK_space), spawn "/home/gazavat/bin/change_layout.sh")
 
-    , ((mod1Mask , xK_Tab), spawn "rofi -show window -show-icons")
+    , ((mod1Mask , xK_Tab), spawn "rofi -show window -show-icons -theme ~/git/dotfiles/rofi/styles/cloud_custom.rasi")
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
@@ -353,7 +353,7 @@ myStartupHook = do
 ------------------------------------------------------------------------
 -- launcher
 
-myLauncher = "rofi -no-lazy-grab -show drun -modi run,drun,window,combi"
+myLauncher = "rofi -no-lazy-grab -show drun -modi drun,window -theme ~/git/dotfiles/rofi/styles/sidetab_custom.rasi"
 dmenuLauncher = "dmenu_run"
 
 myShowWNameTheme :: SWNConfig
