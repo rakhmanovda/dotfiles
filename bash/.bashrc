@@ -34,6 +34,7 @@ __prompt_command() {
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
+alias rofi-prompt='sh ~/git/dotfiles/rofi/rofi_prompt'
 #PS1='[\u@\h \W]\$ '
 
 export HISTCONTROL=ignoredups

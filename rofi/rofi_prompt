@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+#
+# Rofi powered menu to prompt a message and get a yes/no answer.
+# Uses: rofi
+query=$1
+command=$2
+yes='Confirm'
+no='Cancel'
+confirm_query="Are you sure? $query"
+
+chosen=$(printf '%s;%s\n' "$yes" "$no" \
+    | rofi -theme-str '@import "~/git/dotfiles/rofi/styles/confirmation.rasi"' \
+           -p $confirm_query \
+           -dmenu \
+           -sep ";" \
+           -a 0 \
+           -u 1 \
+           -selected-row 1)
+
+
+if [ "$chosen" == "Confirm" ]; then
+    echo "confirmed"
+    eval $command
+else
+    echo "do nothing"
+fi

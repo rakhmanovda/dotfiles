@@ -1,0 +1,17 @@
+#!/bin/bash
+ 
+res=$(echo "logout|reboot|shutdown" | rofi -hover-select -me-select-entry '' -me-accept-entry MousePrimary -sep "|" -dmenu -i -p 'Power Menu: ' "" -theme "~/git/dotfiles/rofi/styles/power_menu.rasi" -l 3)
+ 
+#if [ $res = "lock" ]; then
+#    /home/khoaduccao/.config/lock.sh
+#fi
+if [ $res = "logout" ]; then
+    sh ~/git/dotfiles/rofi/rofi_prompt 'Reboot?'  "echo 1"
+fi
+if [ $res = "reboot" ]; then
+    sh ~/git/dotfiles/rofi/rofi_prompt 'Reboot?'  "shutdown -r now"
+fi
+if [ $res = "shutdown" ]; then
+    sh ~/git/dotfiles/rofi/rofi_prompt 'Shutdown?'  "shutdown -h now"
+fi
+exit 0
