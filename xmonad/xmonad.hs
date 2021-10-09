@@ -353,7 +353,7 @@ myStartupHook = do
 ------------------------------------------------------------------------
 -- launcher
 
-myLauncher = "rofi -no-lazy-grab -show drun -modi drun,window -theme ~/git/dotfiles/rofi/styles/sidetab_custom.rasi"
+myLauncher = "rofi -no-lazy-grab -show drun -modi drun,window -hover-select -me-select-entry '' -me-accept-entry MousePrimary -theme ~/git/dotfiles/rofi/styles/sidetab_custom.rasi"
 dmenuLauncher = "dmenu_run"
 
 myShowWNameTheme :: SWNConfig

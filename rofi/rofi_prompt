@@ -13,6 +13,7 @@ chosen=$(printf '%s;%s\n' "$yes" "$no" \
            -p $confirm_query \
            -dmenu \
            -sep ";" \
+           -hover-select -me-select-entry '' -me-accept-entry MousePrimary \
            -a 0 \
            -u 1 \
            -selected-row 1)

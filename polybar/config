@@ -275,7 +275,7 @@ content-padding = 2
 
 ; "click-(left|middle|right)" will be executed using "/bin/sh -c $COMMAND"
 click-left = "sh ~/git/dotfiles/rofi/rofi_power"
-click-right = rofi -no-lazy-grab -show drun -modi drun,window -theme ~/git/dotfiles/rofi/styles/sidetab_custom.rasi
+click-right = rofi -no-lazy-grab -show drun -modi drun,window -hover-select -me-select-entry '' -me-accept-entry MousePrimary -theme ~/git/dotfiles/rofi/styles/sidetab_custom.rasi
 [settings]
 screenchange-reload = true
 ;compositing-background = xor
