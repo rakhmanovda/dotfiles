@@ -319,7 +319,6 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , className =? "Steam"          --> doFullFloat
     , className =? "Vlc"            --> doFloat
-    , className =? "pia"            --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , manageHook defaultConfig
