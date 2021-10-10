@@ -102,6 +102,7 @@ myAppGrid = [ ("key-mapper", "key-mapper-gtk")
             , ("Vivaldi", "vivaldi-stable")
             , ("Telegram", "telegram-desktop")
             , ("Steam", "steam")
+            , ("Calc", "rofi -show calc -modi calc -no-show-match -no-sort")
             ]
 
 
@@ -206,6 +207,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
+
+    -- screenshots
+    , ((modm .|. shiftMask  , xK_s     ), spawn "maim -s | xclip -selection clipboard -t image/png")
+    , ((modm .|. controlMask, xK_s     ), spawn "maim ~/pics/screenshots/$(date +%s).png")
+    , ((modm .|. mod1Mask   , xK_s     ), spawn "maim -i $(xdotool getactivewindow) ~/pics/screenshots/$(date +%s).png")
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
@@ -313,6 +319,7 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , className =? "Steam"          --> doFullFloat
     , className =? "Vlc"            --> doFloat
+    , className =? "pia"            --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , manageHook defaultConfig

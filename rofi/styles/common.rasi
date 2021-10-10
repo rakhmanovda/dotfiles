@@ -5,6 +5,12 @@
 	  actbg:                       #262626;
 	  urgbg:                       #e53935;
 	  winbg:			                 #26c6da;
+		green:                       #95ee8f;
+		yellow:     								 #f8c456;
+		blue:       								 #6eaafb;
+		mangenta:   								 #d886f3;
+		cyan:       								 #6cdcf7;
+		emphasis:   								 #50536b;
     red:                         rgba ( 220, 50, 47, 100 % );
     lightfg:                     rgba ( 45, 49, 66, 100 % );
     lightbg:                     rgba ( 176, 215, 255, 100 % );
