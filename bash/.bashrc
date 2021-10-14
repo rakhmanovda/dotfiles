@@ -35,6 +35,7 @@ __prompt_command() {
 
 alias ls='ls --color=auto'
 alias rofi-prompt='sh ~/git/dotfiles/rofi/rofi_prompt'
+alias kssh="kitty +kitten ssh"
 #PS1='[\u@\h \W]\$ '
 
 export HISTCONTROL=ignoredups

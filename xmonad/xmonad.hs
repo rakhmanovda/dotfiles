@@ -17,6 +17,7 @@ import XMonad.Layout.ShowWName
 import XMonad.Actions.GridSelect
 import XMonad.Actions.CycleWindows
 import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.FadeWindows
 
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute,  xF86XK_AudioPlay, xF86XK_AudioPrev, xF86XK_AudioNext, xF86XK_AudioStop)
 

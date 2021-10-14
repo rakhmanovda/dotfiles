@@ -17,7 +17,7 @@ start_if_not_running () {
 }
 
 
-commands=(numlockx nm-applet polkit-gnome-au,/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1)
+commands=(numlockx nm-applet polkit-gnome-au,/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 xcompmgr)
 #commands=(nm-applet polkit-gnome-au)
 
 
