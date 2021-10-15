@@ -18,6 +18,7 @@ import XMonad.Actions.GridSelect
 import XMonad.Actions.CycleWindows
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
+import XMonad.Hooks.FadeInactive
 
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute,  xF86XK_AudioPlay, xF86XK_AudioPrev, xF86XK_AudioNext, xF86XK_AudioStop)
 
@@ -99,11 +100,12 @@ spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
 
 myAppGrid = [ ("key-mapper", "key-mapper-gtk")
             , ("Strawberry", "strawberry")
-            , ("Discord", "discord")
-            , ("Vivaldi", "vivaldi-stable")
-            , ("Telegram", "telegram-desktop")
-            , ("Steam", "steam")
-            , ("Calc", "rofi -show calc -modi calc -no-show-match -no-sort")
+            , ("Discord",    "discord")
+            , ("Vivaldi",    "vivaldi-stable")
+            , ("Telegram",   "telegram-desktop")
+            , ("Steam",      "steam")
+            , ("Calc",       "rofi -show calc -modi calc -no-show-match -no-sort")
+            , ("Files",      "nautilus")
             ]
 
 
@@ -213,6 +215,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask  , xK_s     ), spawn "maim -s | xclip -selection clipboard -t image/png")
     , ((modm .|. controlMask, xK_s     ), spawn "maim ~/pics/screenshots/$(date +%s).png")
     , ((modm .|. mod1Mask   , xK_s     ), spawn "maim -i $(xdotool getactivewindow) ~/pics/screenshots/$(date +%s).png")
+
+    --files
+    , ((modm  , xK_e   ), spawn "nautilus")
+
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
@@ -231,15 +237,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    ++
+    -- ++
 
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
     --
-    [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+    -- [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+    --     | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+    --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+    --     ]
 
 
 ------------------------------------------------------------------------
@@ -341,8 +348,16 @@ myEventHook = mempty
 
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
---
-myLogHook = return ()
+-- myLogHook = return ()
+-- myLogHook = fadeWindowsLogHook myFadeHook
+-- myFadeHook = composeAll [opaque -- default to opaque
+--                         , isUnfocused --> opacity 1.0
+--                         , isDialog --> opaque            
+--                         ]
+
+myLogHook :: X ()
+myLogHook = fadeInactiveLogHook fadeAmount
+    where fadeAmount = 0.95
 
 ------------------------------------------------------------------------
 -- Startup hook
