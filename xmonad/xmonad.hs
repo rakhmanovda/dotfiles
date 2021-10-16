@@ -368,7 +368,7 @@ myLogHook = fadeInactiveLogHook fadeAmount
 --
 -- By default, do nothing.
 myStartupHook = do
-	spawn "/home/gazavat/.config/polybar/launch.sh"
+	-- spawn "/home/gazavat/.config/polybar/launch.sh"
 	spawn "feh --bg-fill --randomize ~/git/dotfiles/wallpapers/Winter/*"
 	spawn "/home/gazavat/.config/autostart.sh"
 
