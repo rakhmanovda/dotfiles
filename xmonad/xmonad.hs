@@ -20,11 +20,19 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.FadeInactive
 
+import XMonad.Layout.SubLayouts
+import XMonad.Layout.WindowNavigation
+import XMonad.Layout.Simplest
+
+import XMonad.Layout.MultiToggle 
+import XMonad.Layout.MultiToggle.Instances 
+
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioLowerVolume, xF86XK_AudioRaiseVolume, xF86XK_AudioMute,  xF86XK_AudioPlay, xF86XK_AudioPrev, xF86XK_AudioNext, xF86XK_AudioStop)
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
+import XMonad.Layout.Master
 --to test that it ln's
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -280,7 +288,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 
-myTabConfig = def {
+myTabTheme = def {
 	activeBorderColor = "#7C7C7C",
 	activeTextColor = "#CEFFAC",
 	activeColor = "#000000",
@@ -288,21 +296,25 @@ myTabConfig = def {
 	inactiveTextColor = "#EEEEEE",
 	inactiveColor = "#000000"
 }
---tabbedLayout = tabbed shrinkText myTabConfig
-
-myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
-  where
-     -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
-
+tabbedLayout = windowNavigation $ subTabbed $ smartBorders $ simpleTabbed--tabbed shrinkText myTabConfig
+-- tabbedLayout2 = tabbed shrinkText 
+tallDef = Tall nmaster delta ratio 
+    where
      -- The default number of windows in the master pane
      nmaster = 1
-
      -- Default proportion of screen occupied by master pane
      ratio   = 1/2
-
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
+masterTab = avoidStruts $ smartBorders $ mastered resizeRate defaultSplit Full 
+-- ^ Layout using tabbed for everything that is not master
+  where resizeRate = (1/50)
+        defaultSplit = (1/2)
+myFull = avoidStruts $ smartBorders $ Full
+tiled = avoidStruts $ smartBorders $ subLayout [] (Simplest) $ tallDef
+
+myLayout =  masterTab ||| tiled ||| myFull
+
 
 ------------------------------------------------------------------------
 -- Window rules:
@@ -415,7 +427,7 @@ defaults = def {
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
-        layoutHook         = showWName' myShowWNameTheme $ smartBorders $ myLayout,
+        layoutHook         = showWName' myShowWNameTheme $ myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
