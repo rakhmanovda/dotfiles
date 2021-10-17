@@ -118,7 +118,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn myLauncher)
+    , ((modm,               xK_a     ), spawn myLauncher)
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
@@ -201,7 +201,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     --change keyboard layout
     
-    , ((controlMask  , xK_space), spawn "/home/gazavat/bin/change_layout.sh")
+    --, ((controlMask  , xK_space), spawn "/home/gazavat/bin/change_layout.sh")
 
     , ((mod1Mask , xK_Tab), spawn "rofi -show window -show-icons -theme ~/git/dotfiles/rofi/styles/cloud_custom.rasi")
     -- Toggle the status bar gap
@@ -212,15 +212,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
 
     -- screenshots
-    , ((modm .|. shiftMask  , xK_s     ), spawn "maim -s | xclip -selection clipboard -t image/png")
-    , ((modm .|. controlMask, xK_s     ), spawn "maim ~/pics/screenshots/$(date +%s).png")
-    , ((modm .|. mod1Mask   , xK_s     ), spawn "maim -i $(xdotool getactivewindow) ~/pics/screenshots/$(date +%s).png")
+    -- , ((modm .|. shiftMask  , xK_s     ), spawn "maim -s | xclip -selection clipboard -t image/png")
+    -- , ((modm .|. controlMask, xK_s     ), spawn "maim ~/pics/screenshots/$(date +%s).png")
+    -- , ((modm .|. mod1Mask   , xK_s     ), spawn "maim -i $(xdotool getactivewindow) ~/pics/screenshots/$(date +%s).png")
 
     --files
-    , ((modm  , xK_e   ), spawn "nautilus")
+    --, ((modm  , xK_e   ), spawn "nautilus")
 
     -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    , ((modm .|. shiftMask, xK_q     ), spawn "xfce4-session-logout")
 
     -- Restart xmonad
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
@@ -356,7 +356,7 @@ myEventHook = mempty
 --                         ]
 
 myLogHook :: X ()
-myLogHook = fadeInactiveLogHook fadeAmount
+myLogHook = fadeInactiveLogHook fadeAmount 
     where fadeAmount = 0.95
 
 ------------------------------------------------------------------------
@@ -367,10 +367,10 @@ myLogHook = fadeInactiveLogHook fadeAmount
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = do
+myStartupHook = return ()
 	-- spawn "/home/gazavat/.config/polybar/launch.sh"
-	spawn "feh --bg-fill --randomize ~/git/dotfiles/wallpapers/Winter/*"
-	spawn "/home/gazavat/.config/autostart.sh"
+	-- spawn "feh --bg-fill --randomize ~/git/dotfiles/wallpapers/Winter/*"
+	-- spawn "/home/gazavat/.config/autostart.sh"
 
 ------------------------------------------------------------------------
 -- launcher
