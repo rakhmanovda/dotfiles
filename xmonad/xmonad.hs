@@ -23,6 +23,10 @@ import XMonad.Hooks.FadeInactive
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowNavigation
 import XMonad.Layout.Simplest
+import XMonad.Layout.TwoPane
+import XMonad.Layout.Combo
+
+import XMonad.Layout.StackTile
 
 import XMonad.Layout.MultiToggle 
 import XMonad.Layout.MultiToggle.Instances 
@@ -33,6 +37,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 import XMonad.Layout.Master
+
 --to test that it ln's
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -200,6 +205,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_Left),  shiftPrevScreen >> prevScreen)
     , ((modm,               xK_z),     toggleWS)
 
+    , ((modm .|. controlMask, xK_Return), windows W.shiftMaster)
+
 
     --grid select
     -- KB_GROUP Grid Select (CTR-g followed by a key)
@@ -311,9 +318,18 @@ masterTab = avoidStruts $ smartBorders $ mastered resizeRate defaultSplit Full
   where resizeRate = (1/50)
         defaultSplit = (1/2)
 myFull = avoidStruts $ smartBorders $ Full
+
+myTwoPane = avoidStruts 
+          $ smartBorders 
+          $ combineTwo (TwoPane 0.03 0.5) masterTab masterTab
+
+
+try =  StackTile 1 (3/100) (1/2)
+
 tiled = avoidStruts $ smartBorders $ subLayout [] (Simplest) $ tallDef
 
-myLayout =  masterTab ||| tiled ||| myFull
+
+myLayout =  masterTab ||| tiled ||| myFull -- ||| myTwoPane
 
 
 ------------------------------------------------------------------------
