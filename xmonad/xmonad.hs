@@ -361,6 +361,7 @@ myManageHook = composeAll
     , (className =? "Steam"  <&&> title =? "Friends List")        --> doFloat
     , className =? "vlc"            --> hasBorder False
     , resource  =? "desktop_window" --> doIgnore
+    , isDialog                      --> doCenterFloat
     , resource  =? "kdesktop"       --> doIgnore
     , manageHook defaultConfig
     ]
