@@ -19,6 +19,7 @@ import XMonad.Actions.CycleWindows
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.FadeInactive
+--import XMonad.Layout.IndependentScreens
 
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowNavigation
@@ -35,6 +36,7 @@ import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioLowerVolume, xF86XK_AudioRaiseV
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+--import qualified XMonad.Actions.DynamicWorkspaceOrder as DO
 
 import XMonad.Layout.Master
 
@@ -72,7 +74,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    =  ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -252,16 +254,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    -- ++
+    ++
 
     --
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
     --
-    -- [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-    --     | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-    --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
-    --     ]
+    [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+        ]
 
 
 ------------------------------------------------------------------------
@@ -313,11 +315,13 @@ tallDef = Tall nmaster delta ratio
      ratio   = 1/2
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
-masterTab = avoidStruts $ smartBorders $ mastered resizeRate defaultSplit Full 
+masterTab = avoidStruts $ smartBorders $ TwoPane resizeRate defaultSplit--mastered resizeRate defaultSplit Full 
 -- ^ Layout using tabbed for everything that is not master
   where resizeRate = (1/50)
         defaultSplit = (1/2)
 myFull = avoidStruts $ smartBorders $ Full
+
+myVLCFull = avoidStruts $ noBorders $ Full
 
 myTwoPane = avoidStruts 
           $ smartBorders 
@@ -353,8 +357,9 @@ myManageHook = composeAll
     , isFullscreen --> doFullFloat
     , className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
-    , className =? "Steam"          --> doFullFloat
-    , className =? "Vlc"            --> doFloat
+    , (className =? "Steam"  <&&> resource =? "Dialog")        --> doFloat
+    , (className =? "Steam"  <&&> title =? "Friends List")        --> doFloat
+    , className =? "vlc"            --> hasBorder False
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , manageHook defaultConfig
