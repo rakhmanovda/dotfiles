@@ -39,6 +39,7 @@ import qualified Data.Map        as M
 --import qualified XMonad.Actions.DynamicWorkspaceOrder as DO
 
 import XMonad.Layout.Master
+import XMonad.Layout.TwoPanePersistent (TwoPanePersistent(TwoPanePersistent))
 
 --to test that it ln's
 -- The preferred terminal program, which is used in a binding below and by
@@ -315,7 +316,7 @@ tallDef = Tall nmaster delta ratio
      ratio   = 1/2
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
-masterTab = avoidStruts $ smartBorders $ TwoPane resizeRate defaultSplit--mastered resizeRate defaultSplit Full 
+masterTab = avoidStruts $ smartBorders $ TwoPanePersistent Nothing resizeRate defaultSplit --mastered resizeRate defaultSplit Full 
 -- ^ Layout using tabbed for everything that is not master
   where resizeRate = (1/50)
         defaultSplit = (1/2)
@@ -328,7 +329,6 @@ myTwoPane = avoidStruts
           $ combineTwo (TwoPane 0.03 0.5) masterTab masterTab
 
 
-try =  StackTile 1 (3/100) (1/2)
 
 tiled = avoidStruts $ smartBorders $ subLayout [] (Simplest) $ tallDef
 
