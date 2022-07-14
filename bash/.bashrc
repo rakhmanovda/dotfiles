@@ -40,7 +40,6 @@ alias screenshot="sh ~/git/dotfiles/bin/screenshot.sh"
 #PS1='[\u@\h \W]\$ '
 
 export HISTCONTROL=ignoredups
-export QT_QPA_PLATFORMTHEME=qt5ct
 
 ########
 #ALCI

@@ -389,9 +389,7 @@ myEventHook = mempty
 --                         , isDialog --> opaque            
 --                         ]
 
-myLogHook :: X ()
-myLogHook = fadeInactiveLogHook fadeAmount 
-    where fadeAmount = 0.95
+myLogHook = return ()
 
 ------------------------------------------------------------------------
 -- Startup hook
