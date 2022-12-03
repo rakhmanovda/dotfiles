@@ -35,6 +35,7 @@ __prompt_command() {
 }
 
 alias ls='ls --color=auto'
+alias ll='ls --color=auto -lah'
 
 export HISTCONTROL=ignoredups
 
